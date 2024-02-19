@@ -1,2 +1,8 @@
 * If we don't pass dependency array inside usEffect
 any change occur on page will case rerender
+
+* When your code is exceeding 100 then you should think of
+componet decomposition. When the part is individually
+testable, maintainable, then make that part a component
+
+static router
