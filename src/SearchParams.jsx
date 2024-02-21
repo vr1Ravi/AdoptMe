@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import useBreedList from "./useBreedList";
-import Results from "./Results";
-import requestPets from "./api";
 import { useQuery } from "@tanstack/react-query";
+import AdoptedPetContext from "./AdoptedPetContext";
+import Results from "./Results";
 import fetchSearch from "./fetchSearch";
 const ANIMALS = ["bird", "dog", "cat", "rabbit", "reptile"];
 const SearchParams = () => {
@@ -12,12 +12,16 @@ const SearchParams = () => {
     breed: "",
   });
   const [animal, setAnimal] = useState("");
+  const [page, setPage] = useState(0);
   const [breeds] = useBreedList(animal);
   const results = useQuery({
     queryKey: ["searchPets", requestParams],
     queryFn: fetchSearch,
   });
-  const pets = results?.data?.pets ?? [];
+  const [adoptedPet, _] = useContext(AdoptedPetContext);
+  let pets = results?.data?.pets ?? [];
+  console.log(pets);
+
   return (
     <div className="search-params">
       <form
@@ -26,12 +30,18 @@ const SearchParams = () => {
           const formData = new FormData(e.target);
           const obj = {
             location: formData.get("location") ?? "",
-            animal: formData.get("animal") ?? "",
+            animal: animal,
             breed: formData.get("breed") ?? "",
           };
+          console.log(obj);
           setRequestParams(obj);
         }}
       >
+        {adoptedPet && (
+          <div className="pet image-container">
+            <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
+          </div>
+        )}
         <label htmlFor="location">
           Location
           <input
@@ -59,6 +69,7 @@ const SearchParams = () => {
         <label htmlFor="breed">
           Breed
           <select name="breed" id="breed" disabled={!breeds.length}>
+            <option></option>
             {breeds.map((breed) => (
               <option key={breed}>{breed}</option>
             ))}
@@ -68,6 +79,7 @@ const SearchParams = () => {
       </form>
 
       <Results pets={pets} />
+      <button onClick={() => setPage(page + 1)}>More</button>
     </div>
   );
 };

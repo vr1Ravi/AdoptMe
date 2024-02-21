@@ -5,4 +5,6 @@ any change occur on page will case rerender
 componet decomposition. When the part is individually
 testable, maintainable, then make that part a component
 
-static router
+
+* We should go for redux or context when some data is required in more than two or three component. These are
+App level state. Otherwise always go for local state.
