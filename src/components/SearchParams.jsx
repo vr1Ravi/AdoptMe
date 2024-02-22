@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import useBreedList from "./useBreedList";
+import useBreedList from "../hooks/useBreedList";
 import { useQuery } from "@tanstack/react-query";
-import AdoptedPetContext from "./AdoptedPetContext";
+import AdoptedPetContext from "../AdoptedPetContext";
 import Results from "./Results";
-import fetchSearch from "./fetchSearch";
+import fetchSearch from "../apis/fetchSearch";
 const ANIMALS = ["bird", "dog", "cat", "rabbit", "reptile"];
 const SearchParams = () => {
   const [requestParams, setRequestParams] = useState({
