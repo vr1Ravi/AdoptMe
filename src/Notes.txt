@@ -8,3 +8,17 @@ testable, maintainable, then make that part a component
 
 * We should go for redux or context when some data is required in more than two or three component. These are
 App level state. Otherwise always go for local state.
+
+
+* The advantage of tailwind is it improves the productivity
+of building project as you only have to put classes directly
+inside jsx.
+Disadvantage is sometimes the className can be too large that looks 
+not pretierer.
+
+* postcss :- Transpiler of css. It converts one type of css into different type of css.
+* auto prefixer :- Converts modern css to css all browser understands
+* -p flag generates postcss.config
+
+* specificity of layers in tailwind
+ utilities > component > base
