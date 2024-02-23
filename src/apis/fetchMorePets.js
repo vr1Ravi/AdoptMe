@@ -1,9 +1,8 @@
-const fetchMorePets = async (page) => {
+const fetchMorePets = async (animal, page) => {
   const res = await fetch(
-    ` http://pets-v2.dev-apis.com/pets?animal=dog&page=${page}`,
+    ` http://pets-v2.dev-apis.com/pets?animal=${animal}&page=${page}`,
   );
-  const data = await res.json();
-  return data.pets;
+  return res.json();
 };
 
 export default fetchMorePets;

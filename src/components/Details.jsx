@@ -1,16 +1,18 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import AdoptedPetContext from "../AdoptedPetContext";
+import { useDispatch } from "react-redux";
+import { setAdoptedPet } from "../slices/Pet";
 import Carousel from "./Carousel";
 import fetchPet from "../apis/fetchPet";
 import ErrorBoundary from "./ErrorBoundary";
 import Modal from "./Modal";
+import { Hearts } from "react-loader-spinner";
 
 const Details = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const [_, setAdoptedPet] = useContext(AdoptedPetContext);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const results = useQuery({
     queryKey: ["details", id],
@@ -22,8 +24,14 @@ const Details = () => {
 
   if (results.isLoading) {
     return (
-      <div className="loading-pane">
-        <h2 className="loader"> 0 </h2>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Hearts
+          height="80"
+          width="80"
+          color="#ef4741"
+          ariaLabel="hearts-loading"
+          visible={true}
+        />
       </div>
     );
   }
@@ -56,7 +64,7 @@ const Details = () => {
                 <button
                   className=" text-2xl"
                   onClick={() => {
-                    setAdoptedPet(pet);
+                    dispatch(setAdoptedPet(pet));
                     navigate("/");
                   }}
                 >
